@@ -1,0 +1,47 @@
+.searchResultsContainerContainer {
+	display: flex;
+	flex-direction: column;
+	gap: 8px;
+	padding: 16px 32px;
+	width: 100%;
+	background-color: #f6f9fe;
+
+	p {
+		margin: 0;
+	}
+
+	.mainHeader {
+		font-size: 28px;
+		font-weight: 400;
+		line-height: 40.6px;
+		letter-spacing: -0.005em;
+		text-align: left;
+	}
+
+	.secondaryHeader {
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		gap: 16px;
+		align-items: center;
+
+		.secondaryText {
+			font-size: 16px;
+			font-weight: 400;
+			line-height: 24px;
+			text-align: left;
+			position: relative;
+
+			&::after {
+				content: "•";
+				position: absolute;
+				right: -12px;
+				color: black; /* Adjust color if needed */
+			}
+
+			&:last-child::after {
+				content: none; // Disable content for the last .secondaryText
+			}
+		}
+	}
+}
