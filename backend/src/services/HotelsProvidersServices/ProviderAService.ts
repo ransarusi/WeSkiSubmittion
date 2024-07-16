@@ -13,6 +13,10 @@ export class ProviderAService extends HotelsProviderService {
 				to_date
 			}
 		});
+		if (!data.body.accommodations) {
+			console.error('No accommodations found');
+			return [];
+		}
 		return data.body.accommodations;
 	}
 }
