@@ -9,7 +9,7 @@ import { times } from 'lodash';
 import axios from 'axios';
 
 interface ISearchBarProps {
-	handleSearchSubmit: (searchInput: ISearchInput) => void;
+	handleSearchSubmit: (searchInput: ISearchInput, resortName: string) => void;
 }
 
 export const SearchBar = (props: ISearchBarProps) => {
@@ -42,6 +42,7 @@ export const SearchBar = (props: ISearchBarProps) => {
 	if (!resorts.length) {
 		return <p>Loading Resorts...</p>
 	}
+	const resortName: string | undefined = resorts.find((resort) => resort.id === searchInput['resortId'])?.name;
 
 	return (<div className={classes.searchBarContainer}>
 		<img src={weSkiIcon} alt='We Ski' className={classes.logo} />
@@ -50,7 +51,7 @@ export const SearchBar = (props: ISearchBarProps) => {
 		<DatePicker onChange={onDateChange}/>
 		<Button
 			disabled = {Object.keys(searchInput).length < 4}
-			onClick={() => props.handleSearchSubmit(searchInput as ISearchInput)}
+			onClick={() => props.handleSearchSubmit(searchInput as ISearchInput, resortName || '')}
 		>Search</Button>
 	</div>)
 }

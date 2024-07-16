@@ -1,7 +1,5 @@
-import React, { useEffect, useMemo, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import classes from './styles.module.scss';
-import axios from 'axios';
-import { Accommodation } from '../../models/IHotelsProviderResponse';
 import { IHotelsSearchResponse } from '../../models/IHotelsSearchResponse';
 import { SearchResultsContainer } from '../SearchResultsContainer/SearchResultsContainer';
 import { SearchBar } from '../SearchBar/SearchBar';
@@ -13,7 +11,8 @@ interface IMainPageProps {
 
 export const MainPage = (props: IMainPageProps) => {
 	const [searchResults, setSearchResults] = useState<IHotelsSearchResponse[]>([]);
-	const [ searchInput, setSearchInput ] = useState<ISearchInput | undefined>();
+	const [resortName, setResortName] = useState<string | undefined>();
+	const [searchInput, setSearchInput] = useState<ISearchInput | undefined>();
 
 	const fetchSearchResults = async () => {
 		const sseQueryString = `ski_site=${parseInt(searchInput!.resortId.toString(), 10)}&from_date=${searchInput!.fromDate}&to_date=${searchInput!.toDate}&group_size=${searchInput!.groupSize}`;
@@ -41,14 +40,15 @@ export const MainPage = (props: IMainPageProps) => {
 		}
 	}, [searchInput]);
 
-	const handleSearchSubmit = (searchInput: ISearchInput) => {
+	const handleSearchSubmit = (searchInput: ISearchInput, resortName: string) => {
 		setSearchInput(searchInput);
+		setResortName(resortName);
 	}
 
 	return (<div className={classes.mainPageContainer}>
 		<SearchBar handleSearchSubmit={handleSearchSubmit} />
 		{
-			searchInput && <SearchResultsContainer searchInput={searchInput} resortName='Resort Name' searchResults={searchResults} />
+			searchInput && <SearchResultsContainer searchInput={searchInput} resortName={resortName || ''} searchResults={searchResults} />
 		}
 	</div>)
 }
